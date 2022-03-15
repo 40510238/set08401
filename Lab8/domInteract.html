@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">
+            p {color:red}
+        </style>
+        <title>SET08401 - Interacting with the DOM</title>
+    </head>
+    <body>
+        <p><a href="#" onClick="colourChanger();">Click Me</a></p>
+        <h1 id ="heading">OUTPUT:</h1>
+        <div id="colourPara">Colour Changer</div>
+
+        <script>
+            var current="red";
+            var counter=0;
+
+            function colourChanger()
+            {
+                counter = Math.floor(Math.random() * 7);
+
+                if (counter == 0) {
+                    current = "red";
+                }
+                else if (counter == 1) {
+                    current = "orange";
+                }
+                else if (counter == 2) {
+                    current = "yellow";
+                }
+                else if (counter == 3) {
+                    current = "green";
+                }
+                else if (counter == 4) {
+                    current = "blue";
+                }
+                else if (counter == 5) {
+                    current = "purple"
+                }
+
+                document.getElementById("colourPara").style.color = current;
+                document.getElementById("heading").style.color = current;
+            }
+        </script>
+    </body>
+</html>
