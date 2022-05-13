@@ -2,16 +2,285 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="quiz.css" />
-    <script type="text/javascript" src="quizCode.js"></script>
+    <link rel="stylesheet" href="..\Common\CSS\main.css" />
     <title>World War 2 - The Quiz - Quiz</title>
   </head>
+
   <body>
     <h1>Quiz</h1>
     <div id="quiz"></div>
     <br />
     <br />
-    <button id="finish" class="center">Finish</button>
-    <div id="results"></div>
+    <button id="finishButton" class="center">Finish</button>
+    <h4><a href="quizIndex.html">Return</a></h4>
+    <br />
+    <h3>Leaderboard</h3>
+    <div id="leaderboard"></div>
   </body>
+
+  <script>
+    const questions = [
+      {
+        question: "World War II began in which year?",
+        answers: {
+          A: "1939",
+          B: "1940",
+          C: "1938",
+        },
+        correctAnswer: "A",
+      },
+      {
+        question: "Who was the first fascist leader in Europe?",
+        answers: {
+          A: "Oswald Mosely",
+          B: "Benito Mussolini",
+          C: "Adolf Hitler",
+        },
+        correctAnswer: "B",
+      },
+      {
+        question: "What was the name of the nation that ultimately became Nazi Germany?",
+        answers: {
+          A: "German Republic",
+          B: "Empire of Germany",
+          C: "Weimar Republic",
+        },
+        correctAnswer: "C",
+      },
+      {
+        question: "Who was the leader of Great Britain when they declared war on Nazi Germany?",
+        answers: {
+          A: "Winston Churchill",
+          B: "Neville Chamberlain",
+          C: "Clement Atlee",
+        },
+        correctAnswer: "B",
+      },
+      {
+        question: "What was the name of the French puppet state that was formed following France's capitulation?",
+        answers: {
+          A: "Free France",
+          B: "France",
+          C: "Vichy France",
+        },
+        correctAnswer: "C",
+      },
+      {
+        question: "The Japanese attack on which naval base saw the US enter the war?",
+        answers: {
+          A: "Pearl Harbor",
+          B: "Midway",
+          C: "Guam",
+        },
+        correctAnswer: "A",
+      },
+      {
+        question: "What was the name given to the Nazi's invasion of the Soviet Union?",
+        answers: {
+          A: "Operation Barbarossa",
+          B: "Operation Watchtower",
+          C: "Operation Red",
+        },
+        correctAnswer: "A",
+      },
+      {
+        question: "What country lost the most lives during the conflict?",
+        answers: {
+          A: "United States",
+          B: "Empire of Japan",
+          C: "Soviet Union",
+        },
+        correctAnswer: "C",
+      },
+      {
+        question: "What was the first Nazi concentration camp?",
+        answers: {
+          A: "Ravensbrück",
+          B: "Auschwitz",
+          C: "Dachau",
+        },
+        correctAnswer: "C",
+      },
+      {
+        question: "What research program produced the first nuclear bombs?",
+        answers: {
+          A: "Oppenheimer Project",
+          B: "Manhattan Project",
+          C: "Philadelphia Project",
+        },
+        correctAnswer: "B",
+      },
+      {
+        question: "What German battleship destroyed and sunk the HMS Hood?",
+        answers: {
+          A: "Bismarck",
+          B: "Tirpitz",
+          C: "Dresden",
+        },
+        correctAnswer: "A",
+      },
+      {
+        question: "What was the largest battleship of World War 2?",
+        answers: {
+          A: "Tirpitz",
+          B: "Yamato",
+          C: "Missouri",
+        },
+        correctAnswer: "B",
+      },
+      {
+        question: "Which city was split into East and West following World War 2?",
+        answers: {
+          A: "Paris",
+          B: "Berlin",
+          C: "Munich",
+        },
+        correctAnswer: "B",
+      },
+      {
+        question: "Which was the first Axis power to surrender?",
+        answers: {
+          A: "Kingdom of Italy",
+          B: "Nazi Germany",
+          C: "Empire of Japan",
+        },
+        correctAnswer: "A",
+      },
+      {
+        question: "How many Jewish people were killed in the Holocaust?",
+        answers: {
+          A: "5 million",
+          B: "4 million",
+          C: "6 million",
+        },
+        correctAnswer: "C",
+      },
+    ];
+
+    var leaderboard = [];
+
+    function quiz(questions, quizC) {
+      var numCorrect = 0;
+
+      function showQuestions(questions, quizC) {
+        var output = [];
+        var answers;
+
+        for (var i = 0; i < questions.length; i++) {
+          answers = [];
+
+          for (letter in questions[i].answers) {
+            answers.push(
+              "<label>" +
+                '<input type="radio" name="question' +
+                i +
+                '" value="' +
+                letter +
+                '">' +
+                letter +
+                ": " +
+                questions[i].answers[letter] +
+                "</label>"
+            );
+          }
+
+          output.push(
+            '<div class="question">' +
+              questions[i].question +
+              "</div>" +
+              '<div class="answers">' +
+              answers.join("") +
+              "</div>"
+          );
+        }
+
+        quizC.innerHTML = output.join("");
+      }
+
+      function showResults(questions, quizC, resultsC) {
+        var answerContainers = quizC.querySelectorAll(".answers");
+        var userAnswer = "";
+        numCorrect = 0;
+
+        for (var i = 0; i < questions.length; i++) {
+          const answerContainer = answerContainers[i];
+          const selector = "input[name=question" + i + "]:checked";
+          userAnswer = (answerContainer.querySelector(selector) || {}).value;
+          var correct = "";
+
+          if (userAnswer === questions[i].correctAnswer) {
+            numCorrect++;
+
+            console.log("numCorrect=" + numCorrect);
+
+            answerContainers[i].style.color = "lightgreen";
+          } else {
+            answerContainers[i].style.color = "red";
+          }
+        }
+      }
+
+      function finishFunc(questions, quizC, resultsC) {
+        showResults(questions, quizC, resultsC);
+        var score = {};
+        score.name = prompt("What is your name?");
+        score.result = numCorrect;
+        alert(
+          "Well done " +
+            score.name +
+            "! You scored " +
+            score.result +
+            " out of " +
+            questions.length +
+            "!"
+        );
+
+        addLeaderboard(score);
+      }
+
+      function addLeaderboard(score) {
+        leaderboard.push(score);
+
+        leaderboard.sort(function (a, b) {
+          return parseInt(b.result) - parseInt(a.result);
+        });
+
+        dispLeaderboard(document.getElementById("leaderboard"));
+      }
+
+      function dispLeaderboard(leaderboardC) {
+        var output = [];
+
+        for (var i = 0; i < leaderboard.length; i++) {
+          output.push(
+            '<div class="leaderboard">' +
+              leaderboard[i].name +
+              " " +
+              leaderboard[i].result +
+              "\n\n" +
+              "</div>"
+          );
+
+          leaderboardC.innerHTML = output.join("");
+        }
+      }
+
+      function buttonClickHandler() {
+        finishFunc(
+          questions,
+          document.getElementById("quiz"),
+          document.getElementById("results"),
+          false
+        );
+      }
+
+      document
+        .getElementById("finishButton")
+        .addEventListener("click", buttonClickHandler);
+
+      showQuestions(questions, quizC);
+    }
+
+    quiz(questions, document.getElementById("quiz"));
+  </script>
 </html>

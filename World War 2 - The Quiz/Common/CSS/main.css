@@ -1,10 +1,13 @@
 body {
     background-color: tan;
+    font-size: 20px;
     font-family: sans-serif;
+    color: #333;
 }
 h1 {text-align: center; color: #32213A; font-size: 4em}
 h2 {text-align: center; color: #32213A; font-size: 2.5em}
 h3 {text-align: center; color: #32213A; font-size: 1.5em}
+h4 {text-align: center; color: #32213A; font-size: 1em;}
 p {text-align: left; color: #32213A; font-size: 1.5em}
 
 .flex-container {
@@ -53,3 +56,27 @@ p {text-align: left; color: #32213A; font-size: 1.5em}
     margin-right: auto;
     width: 50%;
   }
+
+.question {
+    font-weight: 600;
+}  
+
+.answers {
+    margin-bottom: 20px;
+}
+
+#finishButton {
+    font-family: sans-serif;
+    font-size: 20px;
+    background-color: #32213A;
+    color: #fff;
+    border: 0px;
+    border-radius: 3px;
+    padding: 20px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+#finishButton:hover {
+    background-color: #5D406A;
+}
